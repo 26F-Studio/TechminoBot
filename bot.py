@@ -5,23 +5,24 @@ import nonebot
 from nonebot_adapter_gocq import Bot as GOCQBot
 
 # Custom your logger
-# 
-# from nonebot.log import logger, default_format
-# logger.add("error.log",
-#            rotation="00:00",
-#            diagnose=False,
-#            level="ERROR",
-#            format=default_format)
+
+from nonebot.log import logger, default_format
+logger.add("error.log",
+           rotation="00:00",
+           diagnose=False,
+           level="ERROR",
+           format=default_format)
 
 # You can pass some keyword args config to init function
 nonebot.init()
-app = nonebot.get_asgi()
-
-driver = nonebot.get_driver()
-driver.register_adapter("gocq", GOCQBot)
-
-nonebot.load_builtin_plugins()
+nonebot.get_driver().register_adapter("gocq", GOCQBot)
 nonebot.load_from_toml("pyproject.toml")
+
+nonebot.load_plugin("nonebot_plugin_status")
+
+nonebot.load_plugins("awesome_bot/plugins")
+
+app = nonebot.get_asgi()
 
 # Modify some config / config depends on loaded configs
 # 
