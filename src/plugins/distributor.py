@@ -46,11 +46,11 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     if args:
         await sync_file.reject("sync 指令不支持参数！")
     else:
-        await check_and_upload()
+        await check_and_upload(True)
         await sync_file.finish("文件同步完成！")
 
 
-async def check_and_upload():
+async def check_and_upload(show_progress):
     bot = get_bots()["2920573475"]
     for group in DIST_GROUPS:
         root_fs = await bot.call_api("get_group_root_files", group_id=group)
@@ -96,8 +96,9 @@ async def check_and_upload():
                         name=new_file,
                         folder=folder["folder_id"]
                     )
-                await sync_file.send(f"群 {group} 同步成功！")
+                if show_progress:
+                    await sync_file.send(f"群 {group} 同步成功！")
 
 
 scheduler = require('nonebot_plugin_apscheduler').scheduler
-scheduler.add_job(check_and_upload, "cron", hour="4")
+scheduler.add_job(check_and_upload, "cron", hour="4",args=[False])
