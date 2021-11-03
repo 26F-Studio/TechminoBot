@@ -53,6 +53,7 @@ async def handle_first_receive(bot: Bot, event: Event):
 @publish_notice.handle()
 async def handle_first_receive(bot: Bot, event: Event):
     args = str(event.get_message()).strip()
+    print(args)
     if args:
         await notice_all(bot, args)
         await publish_notice.finish("公告发布成功！")
