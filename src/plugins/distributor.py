@@ -63,7 +63,7 @@ async def handle_first_receive(bot: Bot, event: Event):
 
 async def delete_all(bot: Bot, folders):
     for folder in folders:
-        if folder["folder_name"] == "Techmino正式版(禁止外传)":
+        if folder["folder_name"] == "Techmino正式版(请不要随便外传)":
             files = await bot.call_api(
                 "get_group_files_by_folder",
                 group_id=folder["group_id"],
@@ -84,7 +84,7 @@ async def check_and_upload(show_progress):
     for group in DIST_GROUPS:
         root_fs = await bot.call_api("get_group_root_files", group_id=group)
         for folder in root_fs["folders"]:
-            if folder["folder_name"] == "Techmino正式版(禁止外传)":
+            if folder["folder_name"] == "Techmino正式版(不要随便外传)":
                 group_file_list = []
                 upload_file_list = []
                 files = await bot.call_api(
